@@ -1,0 +1,74 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: OpenAPI Express Sample
+host: localhost
+basePath: /v1
+tags:
+  - name: user
+    description: About users
+  - name: player
+    description: About players
+  - name: room
+    description: About rooms
+  - name: game
+    description: About games
+paths:
+  /users/{userId}:
+    get:
+      tags:
+        - user
+      summary: ユーザーを取得する
+      operationId: getUser
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: userId
+          description: ユーザーのID
+          required: true
+          type: string
+      responses:
+        "200":
+          description: ユーザーの取得ができました
+          schema:
+            $ref: "#/definitions/User"
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      rank:
+        type: integer
+        format: int64
+  Player:
+    type: object
+    properties:
+      userId:
+        type: string
+      name:
+        type: string
+      point:
+        type: integer
+        format: int64
+      position:
+        $ref: "#/definitions/Position"
+      status:
+        type: string
+        enum:
+          - alive
+          - dead
+  Position:
+    type: object
+    properties:
+      x:
+        type: integer
+        format: int64
+      y:
+        type: integer
+        format: int64
